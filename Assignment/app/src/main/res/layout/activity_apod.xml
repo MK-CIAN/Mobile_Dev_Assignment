@@ -27,11 +27,12 @@
     <ImageView
         android:id="@+id/apodImageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/dateTextView"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
         android:id="@+id/explanationTextView"
@@ -39,6 +40,14 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:layout_below="@id/apodImageView"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/imageUrlTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_below="@id/explanationTextView"
         android:layout_marginTop="4dp" />
 
 </RelativeLayout>

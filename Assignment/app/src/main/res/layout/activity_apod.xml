@@ -5,24 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@drawable/starskk"
     tools:context=".ApodActivity">
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8sp"
+        android:textAlignment="center"
+        android:textColor="@color/cyanCustom"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8sp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
         android:layout_below="@id/titleTextView"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/cyanCustom"
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/apodImageView"
@@ -38,16 +43,20 @@
         android:id="@+id/explanationTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:layout_below="@id/apodImageView"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/imageUrlTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
         android:layout_below="@id/explanationTextView"
-        android:layout_marginTop="4dp" />
+        android:textColor="@color/white"
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
 
 </RelativeLayout>

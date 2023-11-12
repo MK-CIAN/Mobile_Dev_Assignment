@@ -14,6 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.squareup.picasso.Picasso;
 
 public class ApodActivity extends AppCompatActivity {
 
@@ -21,6 +22,8 @@ public class ApodActivity extends AppCompatActivity {
     private TextView explanationTextView;
     private TextView dateTextView;
     private TextView imageUrlTextView;
+
+    private ImageView apodImageView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class ApodActivity extends AppCompatActivity {
         explanationTextView = findViewById(R.id.explanationTextView);
         dateTextView = findViewById(R.id.dateTextView);
         imageUrlTextView = findViewById(R.id.imageUrlTextView);
+        apodImageView = findViewById(R.id.apodImageView);
 
         fetchApodData();
     }
@@ -52,7 +56,6 @@ public class ApodActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ApodResponse apodData = response.body();
                     String imageString = apodData.getUrl();
-
                     if (imageString != null) {
                         Log.d("Message", "Image URL: " + imageString);
 
@@ -61,14 +64,7 @@ public class ApodActivity extends AppCompatActivity {
                         dateTextView.setText(apodData.getDate());
                         imageUrlTextView.setText(apodData.getUrl());
 
-                        Bitmap bitmap = ReadImage.readImage(imageString);
-
-                        ImageView apodImageView = findViewById(R.id.apodImageView);
-                        if (apodImageView != null && bitmap != null) {
-                            apodImageView.setImageBitmap(bitmap);
-                        } else {
-                            Log.d("Message", "ImageView or Bitmap is null");
-                        }
+                        Picasso.get().load(imageString).into(apodImageView);
                     } else {
                         Log.d("Message", "Image URL is null");
                         titleTextView.setText("Error loading APOD");

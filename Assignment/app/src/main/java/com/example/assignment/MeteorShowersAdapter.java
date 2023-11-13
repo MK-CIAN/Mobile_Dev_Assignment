@@ -1,6 +1,7 @@
 package com.example.assignment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class MeteorShowersAdapter extends BaseAdapter {
 
         MeteorShowers meteorShower = meteorShowers.get(position);
 
+
         //Finds and sets the data to a TextView in the layout
         TextView dateTextView = convertView.findViewById(R.id.textDate);
         TextView eventTextView = convertView.findViewById(R.id.eventName);
@@ -49,6 +51,8 @@ public class MeteorShowersAdapter extends BaseAdapter {
         TextView meteorPerHourTextView = convertView.findViewById(R.id.meteorPerHour);
         TextView descriptionTextView = convertView.findViewById(R.id.description);
 
+        Log.d("MeteorShowersAdapter", "Position: " + position);
+        Log.d("MeteorShowersAdapter", "Item: " + meteorShower.toString());
         dateTextView.setText(meteorShower.getDate());
         eventTextView.setText(meteorShower.getEvent());
         constellationTextView.setText(meteorShower.getConstellation());

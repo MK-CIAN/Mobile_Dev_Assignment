@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventsListActivity extends AppCompatActivity {
-    private List<MeteorShowers> meteorShowersList;
+    private List<MeteorShowers> meteorShowersList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,9 @@ public class EventsListActivity extends AppCompatActivity {
         if (meteorShowersList != null && !meteorShowersList.isEmpty()) {
             ListView listView = findViewById(R.id.listView);
             MeteorShowersAdapter adapter = new MeteorShowersAdapter(this, meteorShowersList);
+            Log.d("ListView", "Meteor Showers List Size: " + meteorShowersList.size());
             listView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         } else {
             // Handle the case when no data is available or an error occurred during reading
             Toast.makeText(this, "No data available", Toast.LENGTH_SHORT).show();
@@ -40,7 +42,6 @@ public class EventsListActivity extends AppCompatActivity {
     }
 
     private void readCsvFile(Context context, String csvFileName){
-        meteorShowersList = new ArrayList<>();
 
         AssetManager assetManager = context.getAssets();
         try {
@@ -50,7 +51,9 @@ public class EventsListActivity extends AppCompatActivity {
 
             String line;
             while((line = bufferedReader.readLine()) != null) {
-                String[] values = line.split(","); // Assuming your values are separated by commas
+                String[] values = line.split(",");
+                System.out.println(values);
+                System.out.println(line);// Assuming your values are separated by commas
                 if (values.length == 5) { // Make sure there are enough values in the array
                     MeteorShowers meteorShower = new MeteorShowers(
                             values[0],
@@ -59,7 +62,9 @@ public class EventsListActivity extends AppCompatActivity {
                             values[3],
                             values[4]
                     );
+
                     meteorShowersList.add(meteorShower);
+
                 }
             }
 

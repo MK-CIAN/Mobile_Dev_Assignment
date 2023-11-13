@@ -3,6 +3,7 @@ package com.example.assignment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ListView;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
@@ -25,7 +26,7 @@ public class EventsListActivity extends AppCompatActivity {
 
     private void readCsvFile(){
         try {
-            CSVReader csvReader = new CSVReader(new FileReader("res/raw/MeteorShowerTest.csv"));
+            CSVReader csvReader = new CSVReader(new FileReader("res/raw/meteorshowertest.csv"));
             String[] nextRecord;
             while((nextRecord = csvReader.readNext()) != null) {
                 MeteorShowers meteorShower = new MeteorShowers(
@@ -45,6 +46,8 @@ public class EventsListActivity extends AppCompatActivity {
     }
 
     private void setupListView() {
-
+        ListView listView = findViewById(R.id.listView);
+        MeteorShowersAdapter adapter = new MeteorShowersAdapter(this, meteorShowers);
+        listView.setAdapter(adapter);
     }
 }

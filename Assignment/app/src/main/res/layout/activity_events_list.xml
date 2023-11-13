@@ -11,6 +11,14 @@
         android:padding="16dp"
         tools:context=".EventsListActivity">
 
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp"
+            android:padding="16dp"/>
+
         <TextView
             android:id="@+id/textDate"
             android:layout_width="match_parent"

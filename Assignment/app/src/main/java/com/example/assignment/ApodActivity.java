@@ -60,11 +60,11 @@ public class ApodActivity extends AppCompatActivity {
                         Log.d("Message", "Image URL: " + imageString);
 
                         titleTextView.setText(apodData.getTitle());
-                        explanationTextView.setText(apodData.getExplanation());
                         dateTextView.setText(apodData.getDate());
+                        Picasso.get().load(imageString).into(apodImageView);
+                        explanationTextView.setText(apodData.getExplanation());
                         imageUrlTextView.setText(apodData.getUrl());
 
-                        Picasso.get().load(imageString).into(apodImageView);
                     } else {
                         Log.d("Message", "Image URL is null");
                         titleTextView.setText("Error loading APOD");

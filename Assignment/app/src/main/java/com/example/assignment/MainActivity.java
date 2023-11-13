@@ -19,4 +19,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openEventsList(View view) {
+        Intent intent = new Intent(this, EventsListActivity.class);
+        startActivity(intent);
+    }
+
 }

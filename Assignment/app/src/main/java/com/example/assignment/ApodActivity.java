@@ -22,7 +22,6 @@ public class ApodActivity extends AppCompatActivity {
     private TextView explanationTextView;
     private TextView dateTextView;
     private TextView imageUrlTextView;
-
     private ImageView apodImageView;
 
     @Override

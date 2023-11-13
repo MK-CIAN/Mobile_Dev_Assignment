@@ -37,7 +37,7 @@ public class MeteorShowersAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.activity_events_list, parent, false);
+            convertView = inflater.inflate(R.layout.list_item_meteor_shower, parent, false);
         }
 
         MeteorShowers meteorShower = meteorShowers.get(position);

@@ -29,6 +29,11 @@ public class EventsListActivity extends AppCompatActivity {
 
 
         readCsvFile(this,"meteorshowertest.csv");
+        Log.d("ListView", "Meteor Showers List Size: " + meteorShowersList.size());
+        for (MeteorShowers meteorShower : meteorShowersList) {
+            Log.d("ListView", "Item: " + meteorShower.toString());
+        }
+
         if (meteorShowersList != null && !meteorShowersList.isEmpty()) {
             ListView listView = findViewById(R.id.listView);
             MeteorShowersAdapter adapter = new MeteorShowersAdapter(this, meteorShowersList);
@@ -54,17 +59,15 @@ public class EventsListActivity extends AppCompatActivity {
                 String[] values = line.split(",");
                 System.out.println(values);
                 System.out.println(line);// Assuming your values are separated by commas
-                if (values.length == 5) { // Make sure there are enough values in the array
+                if (values.length > 0) {
                     MeteorShowers meteorShower = new MeteorShowers(
                             values[0],
-                            values[1],
-                            values[2],
-                            values[3],
-                            values[4]
+                            values.length > 1 ? values[1] : "",
+                            values.length > 2 ? values[2] : "",
+                            values.length > 3 ? values[3] : "",
+                            values.length > 4 ? values[4] : ""
                     );
-
                     meteorShowersList.add(meteorShower);
-
                 }
             }
 

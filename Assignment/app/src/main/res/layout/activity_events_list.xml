@@ -2,12 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/starskk">
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/cyanCustom"
+        android:dividerHeight="6dp"
+        android:padding="8dp"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>
 

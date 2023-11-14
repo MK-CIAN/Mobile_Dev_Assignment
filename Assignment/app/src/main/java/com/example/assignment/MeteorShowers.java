@@ -7,7 +7,7 @@ public class MeteorShowers {
     private String meteorsPerHour;
     private String description;
 
-    public MeteorShowers(String date, String event, String constellation, String meteorsPerHour, String description) {
+    public MeteorShowers(String event, String date, String constellation, String meteorsPerHour, String description) {
         this.date = date;
         this.event = event;
         this.constellation = constellation;

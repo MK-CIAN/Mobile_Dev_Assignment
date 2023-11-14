@@ -53,8 +53,8 @@ public class MeteorShowersAdapter extends BaseAdapter {
 
         Log.d("MeteorShowersAdapter", "Position: " + position);
         Log.d("MeteorShowersAdapter", "Item: " + meteorShower.toString());
-        dateTextView.setText(meteorShower.getDate());
         eventTextView.setText(meteorShower.getEvent());
+        dateTextView.setText(meteorShower.getDate());
         constellationTextView.setText(meteorShower.getConstellation());
         meteorPerHourTextView.setText(meteorShower.getMeteorsPerHour());
         descriptionTextView.setText(meteorShower.getDescription());

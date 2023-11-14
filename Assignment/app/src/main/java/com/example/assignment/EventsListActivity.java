@@ -54,6 +54,8 @@ public class EventsListActivity extends AppCompatActivity {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
+            //To skip the first line in the csv, which is just the column names
+            bufferedReader.readLine();
             String line;
             while((line = bufferedReader.readLine()) != null) {
                 String[] values = line.split(",");

@@ -1,13 +1,12 @@
-Date,Event,Constellation,MeteorsPerHour,Description
-03-04 Jan 2024,Quadrantid Meteor Shower 2024,Bootes,40 per hour,A prolific meteor shower known for its strong peak, usually producing around 40 meteors per hour.
-22-23 Apr 2024,Lyrids Meteor Shower 2024,Lyra,20 per hour,The Lyrids is an annual meteor shower that peaks in April. It is known for fast and bright meteors with the potential for fireballs.
-05-06 May 2024,Eta Aquarids Meteor Shower 2024,Aquarius,60 per hour,This meteor shower is associated with Halley's Comet, and it produces a higher-than-average rate of meteors, reaching about 60 per hour.
-28-29 Jul 2024,Delta Aquarids Meteor Shower 2024,Aquarius,20 per hour,The Delta Aquarids is a moderate meteor shower that can produce about 20 meteors per hour at its peak.
-12-13 Aug 2024,Perseids Meteor Shower 2024,Perseus,60 per hour,One of the most popular meteor showers, the Perseids are known for producing up to 60 meteors per hour during peak activity.
-07 Oct 2024,Draconids Meteor Shower 2024,Draco,10 per hour,The Draconids are a minor meteor shower, usually producing about 10 meteors per hour. It is associated with the comet 21P/Giacobini-Zinner.
-21-22 Oct 2024,Orionids Meteor Shower 2024,Orion,20 per hour,The Orionids are a medium-strength meteor shower that produces about 20 meteors per hour. They are associated with Halley's Comet.
-04-05 Nov 2024,Taurids Meteor Shower 2024,Taurus,5-10 per hour,The Taurids are a long-running meteor shower with a low rate of meteors (5-10 per hour). However, they are known for producing bright and slow-moving fireballs.
-17-18 Nov 2024,Leonids Meteor Shower 2024,Leo,15 per hour,The Leonids are an annual meteor shower associated with the comet Tempel-Tuttle. They produce about 15 meteors per hour at their peak.
-13-14 Dec 2024,Geminids Meteor Shower 2024,Gemini,120 per hour,Considered one of the best meteor showers, the Geminids can produce up to 120 meteors per hour. They are known for colorful and bright meteors.
-21-22 Dec 2024,Ursids Meteor Shower 2024,Ursa Minor,5-10 per hour,The Ursids are a minor meteor shower, usually producing about 5-10 meteors per hour. They are associated with Comet 8P/Tuttle.
-
+Event,Date,Constellation,MeteorsPerHour,Description
+Quadrantid Meteor Shower 2024,03-04 Jan 2024,Bootes,40 per hour,A prolific meteor shower known for its strong peak usually producing around 40 meteors per hour.
+Lyrids Meteor Shower 2024,22-23 Apr 2024,Lyra,20 per hour,The Lyrids is an annual meteor shower that peaks in April. It is known for fast and bright meteors with the potential for fireballs.
+Eta Aquarids Meteor Shower 2024,05-06 May 2024,Aquarius,60 per hour,This meteor shower is associated with Halley's Comet and it produces a higher-than-average rate of meteors reaching about 60 per hour.
+Delta Aquarids Meteor Shower 2024,28-29 Jul 2024,Aquarius,20 per hour,The Delta Aquarids is a moderate meteor shower that can produce about 20 meteors per hour at its peak.
+Perseids Meteor Shower 2024,12-13 Aug 2024,Perseus,60 per hour,One of the most popular meteor showers the Perseids are known for producing up to 60 meteors per hour during peak activity.
+Draconids Meteor Shower 2024,07 Oct 2024,Draco,10 per hour,The Draconids are a minor meteor shower usually producing about 10 meteors per hour. It is associated with the comet 21P/Giacobini-Zinner.
+Orionids Meteor Shower 2024,21-22 Oct 2024,Orion,20 per hour,The Orionids are a medium-strength meteor shower that produces about 20 meteors per hour. They are associated with Halley's Comet.
+Taurids Meteor Shower 2024,04-05 Nov 2024,Taurus,5-10 per hour,The Taurids are a long-running meteor shower with a low rate of meteors (5-10 per hour). However they are known for producing bright and slow-moving fireballs.
+Leonids Meteor Shower 2024,17-18 Nov 2024,Leo,15 per hour,The Leonids are an annual meteor shower associated with the comet Tempel-Tuttle. They produce about 15 meteors per hour at their peak.
+Geminids Meteor Shower 2024,13-14 Dec 2024,Gemini,120 per hour,Considered one of the best meteor showers the Geminids can produce up to 120 meteors per hour. They are known for colorful and bright meteors.
+Ursids Meteor Shower 2024,21-22 Dec 2024,Ursa Minor,5-10 per hour,The Ursids are a minor meteor shower usually producing about 5-10 meteors per hour. They are associated with Comet 8P/Tuttle.

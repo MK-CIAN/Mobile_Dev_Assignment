@@ -2,17 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="1dp"
     android:background="@drawable/starskk">
+
+    <TextView
+        android:id="@+id/meteorShowerListTitle"
+        android:layout_width="410dp"
+        android:layout_height="51dp"
+        android:text="2024 Meteor Shower Calendar"
+        android:textAlignment="center"
+        android:textColor="@color/cyanCustom"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/meteorShowerListTitle"
+        android:layout_marginTop="-20dp"
+        android:background="@android:color/transparent"
         android:divider="@color/cyanCustom"
         android:dividerHeight="6dp"
-        android:padding="8dp"
-        android:background="@android:color/transparent"/>
+        android:padding="8dp" />
 
 </RelativeLayout>
 

@@ -4,18 +4,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -73,9 +67,67 @@ public class ApodActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                if (result != null)
+                if (result != null) {
+                    try {
+                        String imageString = extractValueFromKey(result, "url");
+                        if(imageString != null) {
+                                Log.d("Message", "Image URL: " + imageString);
+
+                                titleTextView.setText(extractValueFromKey(result, "title"));
+                                dateTextView.setText(extractValueFromKey(result, "date"));
+                                new DownloadImageTask().execute(imageString);
+                                explanationTextView.setText(extractValueFromKey(result, "explanation"));
+                                imageUrlTextView.setText(imageString);
+                        }
+                        else {
+                            Log.d("Message", "Image URL is null");
+                            titleTextView.setText("Error loading APOD");
+                            explanationTextView.setText("Error Occured While Fetching Data");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    titleTextView.setText("Error loading APOD");
+                    explanationTextView.setText("Error Occured While Fetching Data");
+                }
+            }
+        }.execute();
+    }
+
+    private String extractValueFromKey(String jsonString, String key) {
+        //Manually parsing json
+        try{
+            int index = jsonString.indexOf("\"" + key + "\"");
+            if (index != -1) {
+                int startIndex = jsonString.indexOf("\"", index + key.length() + 2) + 1;
+                int endIndex = jsonString.indexOf("\"", startIndex + 1);
+                return jsonString.substring(startIndex, endIndex);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bitmap = null;
+            try {
+                InputStream in = new URL(imageURL).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if (result != null) {
+                apodImageView.setImageBitmap(result);
             }
         }
-
     }
 }

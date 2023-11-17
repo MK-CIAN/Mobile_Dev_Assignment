@@ -17,7 +17,8 @@
         android:id="@+id/textDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/constellation"

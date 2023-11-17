@@ -24,4 +24,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openUserSaves(View view) {
+        Intent intent = new Intent(this, UserSavesActivity.class);
+        startActivity(intent);
+    }
+
 }

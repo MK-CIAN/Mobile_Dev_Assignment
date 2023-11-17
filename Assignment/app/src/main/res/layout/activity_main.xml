@@ -33,23 +33,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/eventsButton"
+        android:id="@+id/apodButton"
         android:layout_width="204dp"
         android:layout_height="37dp"
-        android:text="Upcoming Astro Events"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/backgroundImageView"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925"
-        android:onClick="openEventsList"/>
-
-    <Button
-        android:id="@+id/newsButton"
-        android:layout_width="204dp"
-        android:layout_height="37dp"
+        android:onClick="openApodActivity"
         android:text="Picture of the Day"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,8 +44,35 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.847"
-        android:onClick="openApodActivity"/>
+        app:layout_constraintVertical_bias="0.796" />
+
+    <Button
+        android:id="@+id/eventsButton"
+        android:layout_width="204dp"
+        android:layout_height="37dp"
+        android:onClick="openEventsList"
+        android:text="Upcoming Astro Events"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundImageView"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
+
+    <Button
+        android:id="@+id/userSaves"
+        android:layout_width="204dp"
+        android:layout_height="37dp"
+        android:onClick="openUserSaves"
+        android:text="Your Saved Events"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundImageView"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -15,6 +16,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import com.squareup.picasso.Picasso;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ApodActivity extends AppCompatActivity {
 
@@ -40,46 +48,34 @@ public class ApodActivity extends AppCompatActivity {
     }
 
     private void fetchApodData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.nasa.gov/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ApodApi apodApi = retrofit.create(ApodApi.class);
-
-        Call<ApodResponse> call = apodApi.getApod("DEMO_KEY");
-
-        call.enqueue(new Callback<ApodResponse>() {
+        new AsyncTask<Void, Void, String>(){
             @Override
-            public void onResponse(Call<ApodResponse> call, Response<ApodResponse> response) {
-                if (response.isSuccessful()) {
-                    ApodResponse apodData = response.body();
-                    String imageString = apodData.getUrl();
-                    if (imageString != null) {
-                        Log.d("Message", "Image URL: " + imageString);
+            protected String doInBackground(Void... voids){
+                try {
+                    URL url = new URL("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.connect();
 
-                        titleTextView.setText(apodData.getTitle());
-                        dateTextView.setText(apodData.getDate());
-                        Picasso.get().load(imageString).into(apodImageView);
-                        explanationTextView.setText(apodData.getExplanation());
-                        imageUrlTextView.setText(apodData.getUrl());
-
-                    } else {
-                        Log.d("Message", "Image URL is null");
-                        titleTextView.setText("Error loading APOD");
-                        explanationTextView.setText("Error Occurred While Fetching Data.");
+                    InputStream inputStream = connection.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        stringBuilder.append(line);
                     }
-                } else {
-                    titleTextView.setText("Error loading APOD");
-                    explanationTextView.setText("Error Occurred While Fetching Data.");
+                    return stringBuilder.toString();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                return null;
             }
 
             @Override
-            public void onFailure(Call<ApodResponse> call, Throwable t) {
-                titleTextView.setText("Failed to connect to APOD service");
-                explanationTextView.setText("Please check your internet connection.");
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                if (result != null)
             }
-        });
+        }
+
     }
 }

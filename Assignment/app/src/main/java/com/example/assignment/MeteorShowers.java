@@ -1,6 +1,11 @@
 package com.example.assignment;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "meteor_showers")
 public class MeteorShowers {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String date;
     private String event;
     private String constellation;

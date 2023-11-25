@@ -32,9 +32,8 @@ public class EventsListActivity extends AppCompatActivity {
             Log.d("ListView", "Item: " + meteorShower.toString());
         }
 
-        ListView listView = null;
+        ListView listView = findViewById(R.id.listView);
         if (meteorShowersList != null && !meteorShowersList.isEmpty()) {
-            listView = findViewById(R.id.listView);
             MeteorShowersAdapter adapter = new MeteorShowersAdapter(this, meteorShowersList);
             Log.d("ListView", "Meteor Showers List Size: " + meteorShowersList.size());
             listView.setAdapter(adapter);
@@ -44,8 +43,8 @@ public class EventsListActivity extends AppCompatActivity {
             Toast.makeText(this, "No data available", Toast.LENGTH_SHORT).show();
         }
 
-        listView.setOnItemClickListener((parent, view, posistion, id) -> {
-            MeteorShowers selectedMeteorShower = meteorShowersList.get(posistion);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            MeteorShowers selectedMeteorShower = meteorShowersList.get(position);
             insertMeteorShowerIntoDatabase(selectedMeteorShower);
         });
     }

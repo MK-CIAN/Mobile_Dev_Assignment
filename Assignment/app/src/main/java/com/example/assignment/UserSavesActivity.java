@@ -23,6 +23,21 @@ public class UserSavesActivity extends AppCompatActivity {
                 MeteorShowersDatabase.class, "meteor-showers-db").build();
 
         retrieveSavedEventsFromRoom(db);
+
+
+    }
+
+    private void removeMeteorShowerFromDatabase(MeteorShowers selectedMeteorShower) {
+        MeteorShowersDatabase db = Room.databaseBuilder(getApplicationContext(),
+                MeteorShowersDatabase.class, "meteor-showers-db").build();
+
+        new Thread(() -> {
+            db.meteorShowersDao().delete(selectedMeteorShower);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Meteor Shower Removed From Database", Toast.LENGTH_SHORT).show();
+                refreshUI();
+            });
+        }).start();
     }
 
     private void retrieveSavedEventsFromRoom(MeteorShowersDatabase db) {
@@ -33,6 +48,14 @@ public class UserSavesActivity extends AppCompatActivity {
                     ListView savedEventsListView = findViewById(R.id.savedEventsListView);
                     adapter = new MeteorShowersAdapter(this, savedEventsList);
                     savedEventsListView.setAdapter(adapter);
+
+                    // Set an onClickListener for each item in the ListView
+                    savedEventsListView.setOnItemClickListener((parent, view, position, id) -> {
+                        MeteorShowers selectedMeteorShower = savedEventsList.get(position);
+                        // Call the method to remove the selected meteor shower
+                        removeMeteorShowerFromDatabase(selectedMeteorShower);
+                    });
+
                     adapter.notifyDataSetChanged();
                 } else {
                     // Handle the case when savedEventsList is null or empty
@@ -41,4 +64,12 @@ public class UserSavesActivity extends AppCompatActivity {
             });
         }).start();
     }
+
+    // Method to refresh the UI after a removal
+    private void refreshUI() {
+        savedEventsList.clear(); // Clear the list
+        retrieveSavedEventsFromRoom(Room.databaseBuilder(getApplicationContext(),
+                MeteorShowersDatabase.class, "meteor-showers-db").build());
+    }
 }
+

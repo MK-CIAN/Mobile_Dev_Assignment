@@ -24,13 +24,20 @@ public class UserSavesActivity extends AppCompatActivity {
         retrieveSavedEventsFromRoom(db);
 
         ListView savedEventsListView = findViewById(R.id.savedEventsListView);
-        adapter = new MeteorShowersAdapter(this, savedEventsList);
-        savedEventsListView.setAdapter(adapter);
 
-        if (savedEventsListView != null && !savedEventsList.isEmpty()) {
-            adapter.notifyDataSetChanged();
+
+        if (savedEventsList != null) {
+            adapter = new MeteorShowersAdapter(this, savedEventsList);
+            savedEventsListView.setAdapter(adapter);
+
+            if (!savedEventsList.isEmpty()) {
+                adapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(this, "No saved events available", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "No saved events available", Toast.LENGTH_SHORT).show();
+            // Handle the case when savedEventsList is null
+            Toast.makeText(this, "Error retrieving saved events", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -25,14 +26,15 @@ public class EventsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events_list);
 
 
-        readCsvFile(this,"meteorshowertest.csv");
+        readCsvFile(this, "meteorshowertest.csv");
         Log.d("ListView", "Meteor Showers List Size: " + meteorShowersList.size());
         for (MeteorShowers meteorShower : meteorShowersList) {
             Log.d("ListView", "Item: " + meteorShower.toString());
         }
 
+        ListView listView = null;
         if (meteorShowersList != null && !meteorShowersList.isEmpty()) {
-            ListView listView = findViewById(R.id.listView);
+            listView = findViewById(R.id.listView);
             MeteorShowersAdapter adapter = new MeteorShowersAdapter(this, meteorShowersList);
             Log.d("ListView", "Meteor Showers List Size: " + meteorShowersList.size());
             listView.setAdapter(adapter);
@@ -41,6 +43,23 @@ public class EventsListActivity extends AppCompatActivity {
             // Handle the case when no data is available or an error occurred during reading
             Toast.makeText(this, "No data available", Toast.LENGTH_SHORT).show();
         }
+
+        listView.setOnItemClickListener((parent, view, posistion, id) -> {
+            MeteorShowers selectedMeteorShower = meteorShowersList.get(posistion);
+            insertMeteorShowerIntoDatabase(selectedMeteorShower);
+        });
+    }
+
+    private void insertMeteorShowerIntoDatabase(MeteorShowers selectedMeteorShower) {
+        MeteorShowersDatabase db = Room.databaseBuilder(getApplicationContext(),
+                MeteorShowersDatabase.class, "meteor-showers-db").build();
+
+        new Thread(() -> {
+            db.meteorShowersDao().insert(selectedMeteorShower);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Meteor Shower added to database", Toast.LENGTH_SHORT).show();
+            });
+        }).start();
     }
 
     private void readCsvFile(Context context, String csvFileName){

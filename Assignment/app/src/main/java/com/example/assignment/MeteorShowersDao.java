@@ -1,5 +1,7 @@
 package com.example.assignment;
 
+import android.util.Log;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;

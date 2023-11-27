@@ -3,7 +3,10 @@ package com.example.assignment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,7 +38,11 @@ public class UserSavesActivity extends AppCompatActivity {
             db.meteorShowersDao().delete(selectedMeteorShower);
             runOnUiThread(() -> {
                 Toast.makeText(this, "Meteor Shower Removed From Database", Toast.LENGTH_SHORT).show();
-                refreshUI();
+                // Update the dataset in the adapter and notify the change
+                savedEventsList.remove(selectedMeteorShower);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             });
         }).start();
     }
@@ -56,6 +63,9 @@ public class UserSavesActivity extends AppCompatActivity {
                         removeMeteorShowerFromDatabase(selectedMeteorShower);
                     });
 
+                    savedEventsListView.setTranslationX(-1500f);
+                    animateObjectIn(savedEventsListView, 150);
+
                     adapter.notifyDataSetChanged();
                 } else {
                     // Handle the case when savedEventsList is null or empty
@@ -63,6 +73,14 @@ public class UserSavesActivity extends AppCompatActivity {
                 }
             });
         }).start();
+    }
+
+    private void animateObjectIn(View view, long delay) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationX", 0);
+        animator.setDuration(1000); // Set the duration of the animation
+        animator.setInterpolator(new AccelerateDecelerateInterpolator()); // Set the interpolation
+        animator.setStartDelay(delay); // Set a delay for each button
+        animator.start(); // Start the animation
     }
 
     // Method to refresh the UI after a removal

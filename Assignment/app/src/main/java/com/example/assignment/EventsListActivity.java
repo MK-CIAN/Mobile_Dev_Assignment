@@ -3,10 +3,13 @@ package com.example.assignment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -47,6 +50,17 @@ public class EventsListActivity extends AppCompatActivity {
             MeteorShowers selectedMeteorShower = meteorShowersList.get(position);
             insertMeteorShowerIntoDatabase(selectedMeteorShower);
         });
+
+        listView.setTranslationX(-1500f);
+        animateObjectIn(listView, 150);
+    }
+
+    private void animateObjectIn(View view, long delay) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationX", 0);
+        animator.setDuration(1000); // Set the duration of the animation
+        animator.setInterpolator(new AccelerateDecelerateInterpolator()); // Set the interpolation
+        animator.setStartDelay(delay); // Set a delay for each button
+        animator.start(); // Start the animation
     }
 
     private void insertMeteorShowerIntoDatabase(MeteorShowers selectedMeteorShower) {

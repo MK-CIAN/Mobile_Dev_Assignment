@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Assignment"
         tools:targetApi="31">
         <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserSavesActivity"
             android:exported="false" />
         <activity
@@ -36,6 +39,9 @@
         <meta-data
             android:name="androidx.room.RoomDatabase"
             android:value="com.example.assignment.MeteorShowersDatabase" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/MapKey" />
     </application>
 
 </manifest>

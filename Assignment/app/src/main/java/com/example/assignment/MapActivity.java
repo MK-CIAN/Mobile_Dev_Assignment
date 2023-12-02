@@ -3,10 +3,13 @@ package com.example.assignment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.room.Room;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -16,10 +19,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -36,6 +42,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
+        new LoadDarkSkyReservesTask().execute();
     }
 
     private void getLastLocation() {
@@ -58,14 +65,34 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
+    private void placeMarkers(List<DarkSkyReserve> darkSkyReserves){
+        for (DarkSkyReserve reserve : darkSkyReserves) {
+            LatLng reserveLocation = new LatLng(reserve.getLatitude(), reserve.getLongitude());
+
+            int markerColor = getColorFromString(reserve.getColor());
+
+            myMap.addMarker(new MarkerOptions()
+                    .position(reserveLocation)
+                    .title(reserve.getName())
+                    .icon(BitmapDescriptorFactory.defaultMarker(markerColor)));
+        }
+    }
+
+    private int getColorFromString(String colorString) {
+        return Color.parseColor(colorString);
+    }
+
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
 
-        LatLng sydney = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        myMap.addMarker(new MarkerOptions().position(sydney).title("Your Location"));
-        myMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        myMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        LatLng loc = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        myMap.addMarker(new MarkerOptions().position(loc).title("Your Location"));
+        myMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
 
+        myMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
     @Override
@@ -77,6 +104,38 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             } else {
                 Toast.makeText(this, "Location Permission Denied, Please Allow to Access Map", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private class LoadDarkSkyReservesTask extends AsyncTask<Void, Void, List<DarkSkyReserve>> {
+        @Override
+        protected List<DarkSkyReserve> doInBackground(Void... voids) {
+            List<DarkSkyReserve> darkSkyReserves = getDarkSkyReservesFromDatabase();
+            if (darkSkyReserves.isEmpty()) {
+                insertDarkSkyReservesFromCSV();
+
+                darkSkyReserves = getDarkSkyReservesFromDatabase();
+            }
+            return darkSkyReserves;
+        }
+
+        @Override
+        protected void onPostExecute(List<DarkSkyReserve> darkSkyReserves) {
+            super.onPostExecute(darkSkyReserves);
+            placeMarkers(darkSkyReserves);
+        }
+    }
+
+    private List<DarkSkyReserve> getDarkSkyReservesFromDatabase(){
+        DarkSkyDatabase skydb = Room.databaseBuilder(getApplicationContext(),
+                DarkSkyDatabase.class, "darksky-database").build();
+
+        return skydb.darkSkyReserveDao().getALL();
+    }
+
+    private void insertDarkSkyReservesFromCSV() {
+        try {
+
         }
     }
 }

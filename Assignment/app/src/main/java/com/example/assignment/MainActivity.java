@@ -22,18 +22,21 @@ public class MainActivity extends AppCompatActivity {
         Button apodButton = findViewById(R.id.apodButton);
         Button eventsButton = findViewById(R.id.eventsButton);
         Button userSavesButton = findViewById(R.id.userSaves);
+        Button mapButton = findViewById(R.id.map);
 
         // Set initial translation values for buttons (outside the screen)
         title.setTranslationX(-1500f);
         apodButton.setTranslationX(-1500f);
         eventsButton.setTranslationX(-1500f);
         userSavesButton.setTranslationX(-1500f);
+        mapButton.setTranslationX(-1550f);
 
         // Animate the buttons to slide in
         animateButtonIn(title, 0);
         animateButtonIn(apodButton, 300);
         animateButtonIn(eventsButton, 400);
         animateButtonIn(userSavesButton, 500);
+        animateButtonIn(mapButton, 600);
     }
 
     private void animateButtonIn(View view, long delay) {

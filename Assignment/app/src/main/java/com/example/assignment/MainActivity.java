@@ -22,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Button apodButton = findViewById(R.id.apodButton);
         Button eventsButton = findViewById(R.id.eventsButton);
         Button userSavesButton = findViewById(R.id.userSaves);
-        Button mapButton = findViewById(R.id.map);
-
+        Button mapButton = findViewById(R.id.mapButton);
         // Set initial translation values for buttons (outside the screen)
         title.setTranslationX(-1500f);
         apodButton.setTranslationX(-1500f);

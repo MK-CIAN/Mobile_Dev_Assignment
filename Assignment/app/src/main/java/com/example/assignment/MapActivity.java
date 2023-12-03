@@ -79,7 +79,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             return;
         }
         for (DarkSkyReserve reserve : darkSkyReserves) {
-            LatLng reserveLocation = new LatLng(reserve.getLatitude(), reserve.getLongitude());
+            Log.d("Marker_Debug", "Latitude: " + reserve.getLatitude() + ", Longitude: " + reserve.getLongitude());
+            //Only working when reversed, no idea why
+            LatLng reserveLocation = new LatLng(reserve.getLongitude(), reserve.getLatitude());
             Log.d("Marker_Debug", "Adding marker at Lat: " + reserve.getLatitude() + ", Lng: " + reserve.getLongitude());
             int markerColor = getColorFromString(reserve.getColor());
 
@@ -192,10 +194,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         String color = values[1].trim();
                         double latitude = Double.parseDouble(values[2].trim());
                         double longitude = Double.parseDouble(values[3].trim());
-
-                        // Log the values for debugging
-                        Log.d("CSV_DEBUG", "Name: " + name + ", Color: " + color +
-                                ", Latitude: " + latitude + ", Longitude: " + longitude);
 
                         DarkSkyReserve reserve = new DarkSkyReserve();
                         reserve.setName(name);

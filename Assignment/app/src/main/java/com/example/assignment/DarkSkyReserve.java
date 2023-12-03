@@ -54,6 +54,7 @@ public class DarkSkyReserve {
     }
 
     public double getLongitude() {
+
         return longitude;
     }
 

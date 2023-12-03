@@ -7,7 +7,10 @@ import androidx.room.Room;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -83,14 +87,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //Only working when reversed, no idea why
             LatLng reserveLocation = new LatLng(reserve.getLongitude(), reserve.getLatitude());
             Log.d("Marker_Debug", "Adding marker at Lat: " + reserve.getLatitude() + ", Lng: " + reserve.getLongitude());
-            int markerColor = getColorFromString(reserve.getColor());
+            int markerColor = Color.parseColor(reserve.getColor());
 
             myMap.addMarker(new MarkerOptions()
                     .position(reserveLocation)
                     .title(reserve.getName())
-                    .icon(BitmapDescriptorFactory.defaultMarker(markerColor)));
+                    .icon(getColoredMarker(markerColor)));
         }
     }
+
+    private BitmapDescriptor getColoredMarker(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+
+        // Create a bitmap with a solid color
+        Bitmap bitmap = Bitmap.createBitmap(48, 48, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(Color.HSVToColor(hsv));
+        canvas.drawCircle(24, 24, 24, paint);
+
+        // Convert the bitmap to a BitmapDescriptor and return it
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
 
     private int getColorFromString(String colorString) {
         try {

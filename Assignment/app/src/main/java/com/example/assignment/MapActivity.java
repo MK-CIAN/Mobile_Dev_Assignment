@@ -25,6 +25,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -135,7 +139,37 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void insertDarkSkyReservesFromCSV() {
         try {
+            InputStream inputStream = getAssets().open("DarkSkyReserve.csv");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
+            bufferedReader.readLine();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] values = line.split(",");
+
+                if (values.length == 4) {
+                    String name = values[0];
+                    String color = values[1];
+                    double latitude = Double.parseDouble(values[2]);
+                    double longitude = Double.parseDouble(values[3]);
+
+                    DarkSkyReserve reserve = new DarkSkyReserve();
+                    reserve.setName(name);
+                    reserve.setColor(color);
+                    reserve.setLatitude(latitude);
+                    reserve.setLongitude(longitude);
+
+                    // Insert the data into the database
+                    DarkSkyDatabase darkSkyDatabase = Room.databaseBuilder(getApplicationContext(),
+                            DarkSkyDatabase.class, "darksky-database").build();
+                    darkSkyDatabase.darkSkyReserveDao().insert(reserve);
+                }
+            }
+
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

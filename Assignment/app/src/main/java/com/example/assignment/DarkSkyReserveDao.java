@@ -12,5 +12,5 @@ public interface DarkSkyReserveDao {
     List<DarkSkyReserve> getALL();
 
     @Insert
-    void insertALL(List<DarkSkyReserve> darkSkyReserves);
+    void insert(DarkSkyReserve reserve);
 }

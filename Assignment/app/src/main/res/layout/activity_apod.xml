@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/starskk">
+
     <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
         tools:context=".ApodActivity">
 
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="74dp"
+            android:layout_height="34dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/arrow_back" />
+
         <TextView
             android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
+            android:layout_width="395dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/backButton"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="8sp"
             android:textAlignment="center"
             android:textColor="@color/cyanCustom"
+            android:textIsSelectable="true"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:textIsSelectable="true" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dateTextView"

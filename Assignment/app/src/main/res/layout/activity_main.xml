@@ -89,7 +89,7 @@
         android:layout_height="50dp"
         android:fontFamily="sans-serif-black"
         android:onClick="openMap"
-        android:text="Map"
+        android:text="Dark Sky Finder"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"

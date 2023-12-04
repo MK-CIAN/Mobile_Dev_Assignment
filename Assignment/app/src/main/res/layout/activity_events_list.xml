@@ -5,10 +5,22 @@
     android:padding="1dp"
     android:background="@drawable/starskk">
 
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="74dp"
+        android:layout_height="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="339dp"
+        android:background="@drawable/arrow_back" />
+
     <TextView
         android:id="@+id/meteorShowerListTitle"
         android:layout_width="410dp"
         android:layout_height="51dp"
+        android:layout_below="@id/backButton"
         android:text="2024 Meteor Shower Calendar"
         android:textAlignment="center"
         android:textColor="@color/cyanCustom"

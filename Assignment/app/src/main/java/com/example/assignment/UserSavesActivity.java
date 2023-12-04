@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,6 +28,16 @@ public class UserSavesActivity extends AppCompatActivity {
                 MeteorShowersDatabase.class, "meteor-showers-db").build();
 
         retrieveSavedEventsFromRoom(db);
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserSavesActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }

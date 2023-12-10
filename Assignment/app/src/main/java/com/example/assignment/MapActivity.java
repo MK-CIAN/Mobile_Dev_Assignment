@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.room.Room;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,10 +15,8 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +29,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,63 +40,54 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap myMap;
     private DarkSkyDatabase darkSkyDatabase;
-
-    Location currentLocation;
-    FusedLocationProviderClient fusedLocationProviderClient;
-
-
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        // Initialize UI elements and request location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
+        // Set up back button functionality
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        backButton.setOnClickListener(v -> {
+            startActivity(new Intent(MapActivity.this, MainActivity.class));
+            finish();
         });
     }
 
+    // Retrieve the last known location
     private void getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        // Check and request location permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
             return;
         }
+        // Retrieve last location
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null){
-                    currentLocation = location;
-
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(MapActivity.this);
-                }
+        task.addOnSuccessListener(location -> {
+            if (location != null) {
+                currentLocation = location;
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                mapFragment.getMapAsync(MapActivity.this);
             }
         });
     }
 
-    private void placeMarkers(List<DarkSkyReserve> darkSkyReserves){
-
+    // Place markers on the map for Dark Sky Reserves
+    private void placeMarkers(List<DarkSkyReserve> darkSkyReserves) {
         if (myMap == null || darkSkyReserves == null) {
             return;
         }
         for (DarkSkyReserve reserve : darkSkyReserves) {
-            Log.d("Marker_Debug", "Latitude: " + reserve.getLatitude() + ", Longitude: " + reserve.getLongitude());
-            //Only working when reversed, no idea why
             LatLng reserveLocation = new LatLng(reserve.getLatitude(), reserve.getLongitude());
-            Log.d("Marker_Debug", "Adding marker at Lat: " + reserve.getLatitude() + ", Lng: " + reserve.getLongitude());
             int markerColor = Color.parseColor(reserve.getColor());
-
             myMap.addMarker(new MarkerOptions()
                     .position(reserveLocation)
                     .title(reserve.getName())
@@ -108,48 +95,39 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    // Generate colored marker icon
     private BitmapDescriptor getColoredMarker(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
 
-        // Create a bitmap with a solid color
         Bitmap bitmap = Bitmap.createBitmap(48, 48, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
         paint.setColor(Color.HSVToColor(hsv));
         canvas.drawCircle(24, 24, 24, paint);
 
-        // Convert the bitmap to a BitmapDescriptor and return it
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-
+    // Get color hue from a string representing a color
     private int getColorFromString(String colorString) {
         try {
-            // Check if the colorString starts with '#' and has a valid length
             if (colorString.startsWith("#") && (colorString.length() == 7 || colorString.length() == 9)) {
-                // Parse the colorString as a hexadecimal string
                 int color = (int) Long.parseLong(colorString.substring(1), 16);
-
-                // If the colorString has alpha, remove it
                 if (colorString.length() == 9) {
                     color &= 0x00FFFFFF;
                 }
-
-                // Convert the color to a hue value in the range [0.0, 360.0)
                 return (int) ((color % 0x01000000) / 16777215.0 * 360.0);
             } else {
-                // Return a default hue if the colorString is not in the expected format
                 return 0;
             }
         } catch (NumberFormatException e) {
-            // Handle the case where parsing fails
             e.printStackTrace();
             return 0;
         }
     }
 
-
+    // Callback when the map is ready
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
@@ -158,10 +136,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         LatLng loc = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         myMap.addMarker(new MarkerOptions().position(loc).title("Your Location"));
         myMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-
         myMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
+    // Handle permission request results
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -174,19 +152,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    // AsyncTask to load Dark Sky Reserves data
     private class LoadDarkSkyReservesTask extends AsyncTask<Void, Void, List<DarkSkyReserve>> {
         @Override
         protected List<DarkSkyReserve> doInBackground(Void... voids) {
-
+            // Initialize the database if null and load Dark Sky Reserves
             if (darkSkyDatabase == null) {
-                // Initialize the database if it's null
                 darkSkyDatabase = Room.databaseBuilder(getApplicationContext(),
                         DarkSkyDatabase.class, "darksky-database").build();
             }
 
-            Log.d("AsyncTask_Debug", "doInBackground: Executing");
             List<DarkSkyReserve> darkSkyReserves = getDarkSkyReservesFromDatabase();
-            Log.d("AsyncTask_Debug", "doInBackground: Completed, Loaded " + darkSkyReserves.size() + " Dark Sky Reserves");
             if (darkSkyReserves.isEmpty()) {
                 insertDarkSkyReservesFromCSV();
                 darkSkyReserves = getDarkSkyReservesFromDatabase();
@@ -197,58 +173,48 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(List<DarkSkyReserve> darkSkyReserves) {
             super.onPostExecute(darkSkyReserves);
-
-            Log.d("AsyncTask_Debug", "Dark Sky Reserves loaded: " + darkSkyReserves.size());
             placeMarkers(darkSkyReserves);
-
-
             if (darkSkyDatabase != null && darkSkyDatabase.isOpen()) {
                 darkSkyDatabase.close();
             }
         }
     }
 
-    private List<DarkSkyReserve> getDarkSkyReservesFromDatabase(){
+    // Retrieve Dark Sky Reserves from the database
+    private List<DarkSkyReserve> getDarkSkyReservesFromDatabase() {
         DarkSkyDatabase darkSkyDatabase = Room.databaseBuilder(getApplicationContext(),
                 DarkSkyDatabase.class, "darksky-database").build();
-
         return darkSkyDatabase.darkSkyReserveDao().getALL();
     }
 
+    // Insert Dark Sky Reserves from CSV file into the database
     private void insertDarkSkyReservesFromCSV() {
-        Log.d("CSV_DEBUG", "Inserting Dark Sky Reserves from CSV");
         try {
             InputStream inputStream = getAssets().open("DarkSkyReserve.csv");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
             bufferedReader.readLine();
-
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 try {
                     String[] values = line.split(",");
-
                     if (values.length == 4) {
                         String name = values[0].trim();
                         String color = values[1].trim();
                         double latitude = Double.parseDouble(values[2].trim());
                         double longitude = Double.parseDouble(values[3].trim());
 
+                        //Inserting into db
                         DarkSkyReserve reserve = new DarkSkyReserve();
                         reserve.setName(name);
                         reserve.setColor(color);
                         reserve.setLatitude(latitude);
                         reserve.setLongitude(longitude);
-
-                        // Insert the data into the database
                         darkSkyDatabase.darkSkyReserveDao().insert(reserve);
                     }
                 } catch (NumberFormatException e) {
-                    // Log the exception
                     Log.e("CSV_DEBUG", "Error parsing CSV line: " + line, e);
                 }
             }
-
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();

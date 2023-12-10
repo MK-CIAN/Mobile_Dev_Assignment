@@ -4,11 +4,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Room Entity class representing Dark Sky Reserves
 @Entity(tableName = "dark_sky_reserves")
 public class DarkSkyReserve {
+    // Primary key with auto-generated value
     @PrimaryKey(autoGenerate = true)
     public long id;
 
+    // Columns for reserve details
     @ColumnInfo(name = "name")
     public String name;
 
@@ -21,6 +24,7 @@ public class DarkSkyReserve {
     @ColumnInfo(name = "longitude")
     public double longitude;
 
+    // Getter and setter methods for each field
     public long getId() {
         return id;
     }
@@ -54,7 +58,6 @@ public class DarkSkyReserve {
     }
 
     public double getLongitude() {
-
         return longitude;
     }
 

@@ -35,6 +35,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+//Map functionality referenced from Google Maps SDK for android Documentation
+//https://developers.google.com/maps/documentation/android-sdk/map
+//Location gathering is derived off of Lab 9
+//Room database derived off of Lab 6 Android Room Database in Java
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private final int FINE_PERMISSION_CODE = 1;

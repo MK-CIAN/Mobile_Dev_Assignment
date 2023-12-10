@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+//API calls referenced from Nasa Api Documentation
+//https://api.nasa.gov/
+//Bitmapping Image referenced/derived off loading image lab Mobile Software Development Module
 public class ApodActivity extends AppCompatActivity {
 
     private TextView titleTextView, explanationTextView, dateTextView, imageUrlTextView;

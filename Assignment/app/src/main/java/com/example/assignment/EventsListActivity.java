@@ -22,6 +22,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+// Code inspired by Lab 5 - ListView with images and Double Text
+// And Room database derived off of Lab 6 Android Room Database in Java
 public class EventsListActivity extends AppCompatActivity {
     // List to store MeteorShowers data
     private List<MeteorShowers> meteorShowersList = new ArrayList<>();

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+//Room database derived off of Lab 6 Android Room Database in Java
 public class UserSavesActivity extends AppCompatActivity {
     private List<MeteorShowers> savedEventsList = new ArrayList<>();
     private MeteorShowersAdapter adapter;

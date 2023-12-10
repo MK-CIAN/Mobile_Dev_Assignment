@@ -1,17 +1,23 @@
 package com.example.assignment;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Room Entity annotation to specify table name
 @Entity(tableName = "meteor_showers")
 public class MeteorShowers {
+    // PrimaryKey with autoGenerate
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+    // Fields representing columns in the database table
     private String date;
     private String event;
     private String constellation;
     private String meteorsPerHour;
     private String description;
 
+    // Constructor to initialize the MeteorShowers object
     public MeteorShowers(String event, String date, String constellation, String meteorsPerHour, String description) {
         this.date = date;
         this.event = event;
@@ -19,6 +25,8 @@ public class MeteorShowers {
         this.meteorsPerHour = meteorsPerHour;
         this.description = description;
     }
+
+    // Getter and setter methods for each field
 
     public String getDate() {
         return date;
@@ -60,6 +68,7 @@ public class MeteorShowers {
         this.description = description;
     }
 
+    // Getter and setter for the primary key
     public int getId() {
         return id;
     }

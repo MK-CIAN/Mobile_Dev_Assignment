@@ -91,13 +91,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void placeMarkers(List<DarkSkyReserve> darkSkyReserves){
 
-        if (myMap == null) {
+        if (myMap == null || darkSkyReserves == null) {
             return;
         }
         for (DarkSkyReserve reserve : darkSkyReserves) {
             Log.d("Marker_Debug", "Latitude: " + reserve.getLatitude() + ", Longitude: " + reserve.getLongitude());
             //Only working when reversed, no idea why
-            LatLng reserveLocation = new LatLng(reserve.getLongitude(), reserve.getLatitude());
+            LatLng reserveLocation = new LatLng(reserve.getLatitude(), reserve.getLongitude());
             Log.d("Marker_Debug", "Adding marker at Lat: " + reserve.getLatitude() + ", Lng: " + reserve.getLongitude());
             int markerColor = Color.parseColor(reserve.getColor());
 
@@ -177,6 +177,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private class LoadDarkSkyReservesTask extends AsyncTask<Void, Void, List<DarkSkyReserve>> {
         @Override
         protected List<DarkSkyReserve> doInBackground(Void... voids) {
+
+            if (darkSkyDatabase == null) {
+                // Initialize the database if it's null
+                darkSkyDatabase = Room.databaseBuilder(getApplicationContext(),
+                        DarkSkyDatabase.class, "darksky-database").build();
+            }
+
             Log.d("AsyncTask_Debug", "doInBackground: Executing");
             List<DarkSkyReserve> darkSkyReserves = getDarkSkyReservesFromDatabase();
             Log.d("AsyncTask_Debug", "doInBackground: Completed, Loaded " + darkSkyReserves.size() + " Dark Sky Reserves");

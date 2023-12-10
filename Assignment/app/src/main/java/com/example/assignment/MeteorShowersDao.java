@@ -19,4 +19,7 @@ public interface MeteorShowersDao {
 
     @Query("SELECT * FROM meteor_showers")
     List<MeteorShowers> getAllMeteorShowers();
+
+    @Query("SELECT * FROM meteor_showers WHERE event = :event LIMIT 1")
+    MeteorShowers getMeteorShowerByName(String event);
 }

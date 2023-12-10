@@ -80,10 +80,21 @@ public class EventsListActivity extends AppCompatActivity {
                 MeteorShowersDatabase.class, "meteor-showers-db").build();
 
         new Thread(() -> {
-            db.meteorShowersDao().insert(selectedMeteorShower);
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Meteor Shower added to database", Toast.LENGTH_SHORT).show();
-            });
+            // Check if the meteor shower already exists in the database
+            MeteorShowers existingMeteorShower = db.meteorShowersDao().getMeteorShowerByName(selectedMeteorShower.getEvent());
+
+            if (existingMeteorShower == null) {
+                // If the meteor shower doesn't exist, insert it into the database
+                db.meteorShowersDao().insert(selectedMeteorShower);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Meteor Shower added to database", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                // If the meteor shower already exists, show a toast message
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Meteor Shower already exists in the database", Toast.LENGTH_SHORT).show();
+                });
+            }
         }).start();
     }
 
